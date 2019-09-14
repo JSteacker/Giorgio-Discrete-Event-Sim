@@ -79,14 +79,3 @@ int isEmptyFIFO(FIFOQueue *fifo){
         return 0;
     }
 }
-
-/*
-int isInFIFO(FIFOQueue *fifo, int id){
-    for(int i = fifo->front; i < fifo->rear; i++){
-        if(fifo->eventList[i].id == id){
-            return 1;
-        }
-    }
-    return 0;
-}
-*/

@@ -1,7 +1,6 @@
 #ifndef PRIORITYQUEUE_H_INCLUDED
 #define PRIORITYQUEUE_H_INCLUDED
 #include "Event.h"
-/* ^^ these are the include guards */
 
 //THIS IS THE PRIORITY QUEUE
 typedef struct{
@@ -11,12 +10,12 @@ typedef struct{
 } PriorityQueue;
 
 /* Prototypes for the functions */
-PriorityQueue *initalizeEQ(int capacity);
-void eventQInsert(PriorityQueue *eq, Event event);
-void heapBotTop(PriorityQueue *eq, int index);
-Event popMin(PriorityQueue *eq);
-void printEQ(PriorityQueue *eq);
-void destroy(PriorityQueue *eq);
-int isFull(PriorityQueue *eq);
-int isEmpty(PriorityQueue *eq);
+PriorityQueue *initalizePQ(int capacity);
+void priorityQInsert(PriorityQueue *pq, Event event);
+void heapBotTop(PriorityQueue *pq, int index);
+Event popMin(PriorityQueue *pq);
+void printEQ(PriorityQueue *pq);
+void destroy(PriorityQueue *pq);
+int isFull(PriorityQueue *pq);
+int isEmpty(PriorityQueue *pq);
 #endif

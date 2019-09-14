@@ -5,6 +5,7 @@
 #include "FIFOQueue.h"
 #include "Event.h"
 
+int randGen(int min, int max);
 
 int SEED;   //Seed for random number generation
 int INIT_TIME;  //Initial time the simulation starts
@@ -21,8 +22,6 @@ int DISK1_MAX; //Maximum amount of time it takes to finish Disk1 event
 int DISK2_MIN;  //Minimum amount of time it takes to finish Disk2 event
 int DISK2_MAX; //Maximum amount of time it takes to finish Disk2 event
 double QUIT_PROB;   //Probability an event quits after being processed at CPU
-
-int randGen(int min, int max);
 
 /*
     Main loop of the simulator. Runs from INIT_TIME to FIN_TIME
@@ -68,12 +67,6 @@ int main(){
     int finishingTime = 0;
     Event processingEvent;
 
-    //Initialize queues
-    PriorityQueue *eventQueue = initalizeEQ(EQ_CAPACITY);
-    FIFOQueue *cpuQueue = initialize(CPU_CAPACITY);
-    FIFOQueue *disk1 = initialize(DISK_CAPACITY);
-    FIFOQueue *disk2 = initialize(DISK_CAPACITY);
-
     //Statistic variables
     int eqMax = 0;
     int eqTotal = 0;
@@ -97,10 +90,16 @@ int main(){
     int disk1Completed = 0;
     int disk2Completed = 0;
 
+    //Initialize queues
+    PriorityQueue *eventQueue = initalizePQ(EQ_CAPACITY);
+    FIFOQueue *cpuQueue = initialize(CPU_CAPACITY);
+    FIFOQueue *disk1 = initialize(DISK_CAPACITY);
+    FIFOQueue *disk2 = initialize(DISK_CAPACITY);
+
     //Insert initial events
-    eventQInsert(eventQueue, createEvent(0, 0, INIT_TIME));
-    eventQInsert(eventQueue, createEvent(0, 1, FIN_TIME));
-    eventQInsert(eventQueue, createEvent(jobId, 2, INIT_TIME));
+    priorityQInsert(eventQueue, createEvent(0, 0, INIT_TIME));
+    priorityQInsert(eventQueue, createEvent(0, 1, FIN_TIME));
+    priorityQInsert(eventQueue, createEvent(jobId, 2, INIT_TIME));
 
     fprintf(log, "\nEvent Log");
     //Event handler (main loop of simulator)
@@ -153,7 +152,7 @@ int main(){
             case 2: //CPU ARRIVAL
                     //Create new arrival event and insert into event queue
                     jobId++;
-                    eventQInsert(eventQueue, createEvent(jobId, 2, runTime + randGen(ARRIVE_MIN, ARRIVE_MAX)));
+                    priorityQInsert(eventQueue, createEvent(jobId, 2, runTime + randGen(ARRIVE_MIN, ARRIVE_MAX)));
                     //Send current event to CPU FIFO
                     insertFIFO(cpuQueue, currentJob);
                     break;
@@ -164,24 +163,24 @@ int main(){
 
                     //Probability that current event exits after CPU
                     if(randGen(0,100) <= (int)(QUIT_PROB * 100)){
-                        eventQInsert(eventQueue, createEvent(currentJob.id, 8, currentJob.time));   //Create exit event
+                        priorityQInsert(eventQueue, createEvent(currentJob.id, 8, currentJob.time));   //Create exit event
                     }
                     else{
                         //Event leaves CPU, decide which disk to send to
                         if(disk1->rear == disk2->rear){
                             int randNum = randGen(0,100);
                             if(randNum <= 50){
-                                eventQInsert(eventQueue, createEvent(currentJob.id, 4, currentJob.time));
+                                priorityQInsert(eventQueue, createEvent(currentJob.id, 4, currentJob.time));
                             }
                             else{
-                                eventQInsert(eventQueue, createEvent(currentJob.id, 6, currentJob.time));
+                                priorityQInsert(eventQueue, createEvent(currentJob.id, 6, currentJob.time));
                             }
                         }
                         else if(disk1->rear < disk2->rear){
-                            eventQInsert(eventQueue, createEvent(currentJob.id, 4, currentJob.time));
+                            priorityQInsert(eventQueue, createEvent(currentJob.id, 4, currentJob.time));
                         }
                         else{
-                            eventQInsert(eventQueue, createEvent(currentJob.id, 6, currentJob.time));
+                            priorityQInsert(eventQueue, createEvent(currentJob.id, 6, currentJob.time));
                         }
                     }
                     break;  //Finish, processCPU(currentJob)
@@ -193,7 +192,7 @@ int main(){
                     diskOneBusy = 0;
                     disk1Completed++;
                     //Send event to arrive at CPU
-                    eventQInsert(eventQueue, createEvent(currentJob.id, 2, currentJob.time));
+                    priorityQInsert(eventQueue, createEvent(currentJob.id, 2, currentJob.time));
                     break;
             case 6: //DISK2 ARRIVE
                     insertFIFO(disk2, currentJob);
@@ -202,7 +201,7 @@ int main(){
                     diskTwoBusy = 0;
                     disk2Completed++;
                     //Send event to arrive at CPU
-                    eventQInsert(eventQueue, createEvent(currentJob.id, 2, currentJob.time));
+                    priorityQInsert(eventQueue, createEvent(currentJob.id, 2, currentJob.time));
                     break;
             case 8: //JOB EXITS
                     break;
@@ -215,7 +214,7 @@ int main(){
             //Determine finishing time
             finishingTime = runTime + randGen(CPU_MIN, CPU_MAX);
             //Create finishing event
-            eventQInsert(eventQueue, createEvent(processingEvent.id, 3, finishingTime));
+            priorityQInsert(eventQueue, createEvent(processingEvent.id, 3, finishingTime));
             //Set CPU to busy
             cpuBusy = 1;
 
@@ -232,7 +231,7 @@ int main(){
         if(!diskOneBusy && !isEmptyFIFO(disk1)){
             processingEvent = removeFIFO(disk1);
             finishingTime = runTime + randGen(DISK1_MIN, DISK1_MAX);
-            eventQInsert(eventQueue, createEvent(processingEvent.id, 5, finishingTime));
+            priorityQInsert(eventQueue, createEvent(processingEvent.id, 5, finishingTime));
             diskOneBusy = 1;
 
             disk1BusyTime = disk1BusyTime + finishingTime;
@@ -248,7 +247,7 @@ int main(){
         if(!diskTwoBusy && !isEmptyFIFO(disk2)){
             processingEvent = removeFIFO(disk2);
             finishingTime = runTime + randGen(DISK2_MIN, DISK2_MAX);
-            eventQInsert(eventQueue, createEvent(processingEvent.id, 7, finishingTime));
+            priorityQInsert(eventQueue, createEvent(processingEvent.id, 7, finishingTime));
             diskTwoBusy = 1;
 
             disk2BusyTime = disk2BusyTime + finishingTime;
@@ -278,18 +277,6 @@ int main(){
             disk2Max = disk2->rear;
         }
         numOfRuns++;
-/*
-        printEQ(eventQueue);
-        printf("CPU Queue: ");
-        printFIFO(cpuQueue);
-        printf("\n");
-        printf("Disk1 Queue: ");
-        printFIFO(disk1);
-        printf("\n");
-        printf("Disk2 Queue: ");
-        printFIFO(disk2);
-        printf("\n");
-        printf("runtime%d\n", runTime);*/
     }
 
     fclose(log);

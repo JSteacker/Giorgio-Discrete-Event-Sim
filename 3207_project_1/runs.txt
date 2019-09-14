@@ -1,0 +1,214 @@
+Run 1:
+-----------
+SEED: 1011
+INIT_TIME: 0
+FIN_TIME: 10000
+EQ_CAPACITY: 10000
+CPU_CAPACITY: 10000
+DISK_CAPACITY: 10000
+ARRIVE_MIN: 50
+ARRIVE_MAX: 150
+CPU_MIN: 50
+CPU_MAX: 150
+DISK1_MIN: 50
+DISK1_MAX: 150
+DISK2_MIN: 50
+DISK2_MAX: 150
+DISK2_MIN: 0.200000
+
+
+Maximum Queue Sizes
+Event Queue: 80
+CPU Queue: 3519
+Disk1 Queue: 1
+Disk2 Queue: 1
+
+Utilization
+CPU: 51%
+Disk1: 22%
+Disk2: 18%
+
+Average Response Time
+CPU: 102
+Disk1: 1
+Disk2: 0
+
+Maximum Response Time
+CPU: 8289
+Disk1: 198
+Disk2: 147
+
+Throughput
+CPU: 0.010100 jobs per time unit
+Disk1: 0.004300 jobs per time unit
+Disk2: 0.003200 jobs per time unit
+
+
+Very low queue sizes for disks, CPU queue is extremely larger.
+----------------------------------------------------------------
+
+
+
+Run 2: same parameters, changed seed to 1012
+------------------------------------------------
+
+Maximum Queue Sizes
+Event Queue: 84
+CPU Queue: 3672
+Disk1 Queue: 1
+Disk2 Queue: 1
+
+Utilization
+CPU: 50%
+Disk1: 23%
+Disk2: 21%
+
+Average Response Time
+CPU: 96
+Disk1: 1
+Disk2: 1
+
+Maximum Response Time
+CPU: 8421
+Disk1: 216
+Disk2: 166
+
+Throughput
+CPU: 0.009700 jobs per time unit
+Disk1: 0.004100 jobs per time unit
+Disk2: 0.003900 jobs per time unit
+
+Statistics similar to first run, all within 10% range of run 1's
+-------------------------------------------------------------------
+
+
+
+Run 3: once more with same parameters except seed, which is 1013
+----------------------------------------------------------------
+Maximum Queue Sizes
+Event Queue: 86
+CPU Queue: 3981
+Disk1 Queue: 1
+Disk2 Queue: 1
+
+Utilization
+CPU: 50%
+Disk1: 23%
+Disk2: 19%
+
+Average Response Time
+CPU: 88
+Disk1: 0
+Disk2: 1
+
+Maximum Response Time
+CPU: 8310
+Disk1: 161
+Disk2: 173
+
+Throughput
+CPU: 0.010000 jobs per time unit
+Disk1: 0.004200 jobs per time unit
+Disk2: 0.004000 jobs per time unit
+
+Once again all stats are within 10% of the previous stats. Next run will change parameters to improve disk queues/response time
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Run 4: Seed set back to 1011, cut ARRIVE_MIN and ARRIVE_MAX in half
+-----------------------------------------------------------------------
+Maximum Queue Sizes
+Event Queue: 77
+CPU Queue: 6995
+Disk1 Queue: 1
+Disk2 Queue: 1
+
+Utilization
+CPU: 51%
+Disk1: 20%
+Disk2: 18%
+
+Average Response Time
+CPU: 58
+Disk1: 0
+Disk2: 0
+
+Maximum Response Time
+CPU: 8760
+Disk1: 213
+Disk2: 242
+
+Throughput
+CPU: 0.010100 jobs per time unit
+Disk1: 0.003600 jobs per time unit
+Disk2: 0.003700 jobs per time unit
+
+Similar results again, the ARRIVE interval doesn't seem to be the problem
+--------------------------------------------------------------------------
+
+
+Run 5: Seed is 1011, ARRIVE_MIN and MAX set back to original values, CPU_MIN/MAX halved
+---------------------------------------------------------------------------------------
+Maximum Queue Sizes
+Event Queue: 160
+CPU Queue: 7186
+Disk1 Queue: 2
+Disk2 Queue: 2
+
+Utilization
+CPU: 101%
+Disk1: 42%
+Disk2: 41%
+
+Average Response Time
+CPU: 100
+Disk1: 1
+Disk2: 1
+
+Maximum Response Time
+CPU: 8418
+Disk1: 257
+Disk2: 310
+
+Throughput
+CPU: 0.019900 jobs per time unit
+Disk1: 0.007700 jobs per time unit
+Disk2: 0.007700 jobs per time unit
+
+CPU utilization doubled, disk queues and response time stayed the same
+-------------------------------------------------------------------------
+
+
+Run 6: Seed is 1011, CPU_MIN/MAX doubled from original value
+-------------------------------------------------------------
+Maximum Queue Sizes
+Event Queue: 42
+CPU Queue: 2045
+Disk1 Queue: 0
+Disk2 Queue: 0
+
+Utilization
+CPU: 26%
+Disk1: 6%
+Disk2: 12%
+
+Average Response Time
+CPU: 100
+Disk1: 0
+Disk2: 1
+
+Maximum Response Time
+CPU: 8935
+Disk1: 140
+Disk2: 140
+
+Throughput
+CPU: 0.005100 jobs per time unit
+Disk1: 0.001600 jobs per time unit
+Disk2: 0.002200 jobs per time unit
+
+CPU utilization is halved.
+Maximum disk queue size is 0, but disks have been processed through both disks. Therefore, the disks are processing
+faster than events can finish at the CPU.
+----------------------------------------------------------------------------------------------------------------------

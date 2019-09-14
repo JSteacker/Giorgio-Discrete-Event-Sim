@@ -3,11 +3,17 @@
 #include <string.h>
 #include "Event.h"
 
+/*
+    Returns the values to create an event struct
+*/
 Event createEvent(int id, int type, int time){
     Event job = {id, type, time};
     return job;
 }
 
+/*
+    Prints line depending on the characteristics of the event
+*/
 void printEvent(Event job){
     if(job.type == 0){
         printf("SIM_START at %d", job.time);
