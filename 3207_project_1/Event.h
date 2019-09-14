@@ -9,6 +9,5 @@ typedef struct{
 } Event;
 
 Event createEvent(int id, int type, int time);
-Event changeEventType(Event event, int type);
-Event changeEventTime(Event event, int time);
+void printEvent(Event job);
 #endif

@@ -18,7 +18,6 @@ FIFOQueue *initialize(int capacity){
         printf("Memory Error!");
         return;
     }
-    printf("Initializing fifo queue successful!\n");
     return fifo;
 }
 
@@ -32,7 +31,8 @@ void insertFIFO(FIFOQueue *fifo, Event event){
     }
 }
 
-void removeFIFO(FIFOQueue *fifo){
+Event removeFIFO(FIFOQueue *fifo){
+    Event pop = fifo->eventList[fifo->front];
     if(isEmptyFIFO(fifo)){
         return;
     }
@@ -42,6 +42,7 @@ void removeFIFO(FIFOQueue *fifo){
             fifo->eventList[i] = fifo->eventList[i+1];
         }
         fifo->rear--;
+        return pop;
     }
 }
 
@@ -78,3 +79,14 @@ int isEmptyFIFO(FIFOQueue *fifo){
         return 0;
     }
 }
+
+/*
+int isInFIFO(FIFOQueue *fifo, int id){
+    for(int i = fifo->front; i < fifo->rear; i++){
+        if(fifo->eventList[i].id == id){
+            return 1;
+        }
+    }
+    return 0;
+}
+*/

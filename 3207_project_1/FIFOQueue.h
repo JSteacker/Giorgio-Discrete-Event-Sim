@@ -11,7 +11,7 @@ typedef struct{
 
 FIFOQueue *initialize(int capacity);
 void insertFIFO(FIFOQueue *fifo, Event event);
-void removeFIFO(FIFOQueue *fifo);
+Event removeFIFO(FIFOQueue *fifo);
 void printFIFO(FIFOQueue *fifo);
 void destroyFIFO(FIFOQueue *fifo);
 int isFullFIFO(FIFOQueue *fifo);

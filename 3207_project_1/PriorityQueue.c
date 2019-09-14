@@ -20,7 +20,6 @@ PriorityQueue *initalizeEQ(int capacity){
         printf("Memory Error!");
         return;
     }
-    printf("Initializing event queue successful!\n");
     return eq;
 }
 
@@ -85,21 +84,7 @@ Event popMin(PriorityQueue *eq){
 void printEQ(PriorityQueue *eq){
     int i;
     for(i=0;i< eq->currentSize;i++){
-        if(eq->eventList[i].id != 0 && eq->eventList[i].id != 1000000){
-            printf("job%d", eq->eventList[i].id);
-        }
-        if(eq->eventList[i].type == 0){
-            printf(",SIM_START,");
-            //event
-        }
-        else if(eq->eventList[i].type == 1){
-            printf(",SIM_END,");
-            //event
-        }
-        else if(eq->eventList[i].type == 2){
-            printf(",Arrival,");
-        }
-        printf("%d", eq->eventList[i].time);
+        printEvent(eq->eventList[i]);
         printf("\n");
     }
 }
@@ -124,4 +109,13 @@ int isEmpty(PriorityQueue *eq){
     else{
         return 0;
     }
+}
+
+int getTime(PriorityQueue *eq, int id){
+    for(int i=0;i< eq->currentSize;i++){
+        if(eq->eventList[i].id == id){
+            return eq->eventList[i].time;
+        }
+    }
+    return 0;
 }
