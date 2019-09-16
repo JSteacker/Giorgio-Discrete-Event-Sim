@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1568499379 source:c:\users\jstea\onedrive\desktop\c projects\3207_project_1\main.c
+1568509020 source:c:\users\jstea\onedrive\desktop\c projects\3207_project_1\main.c
 	<stdio.h>
 	<stdlib.h>
 	"PriorityQueue.h"
@@ -25,7 +25,7 @@
 1568150184 c:\users\jstea\onedrive\desktop\c projects\3207_project_1\fifoqueue.h
 	"Event.h"
 
-1568239958 source:c:\users\jstea\onedrive\desktop\c projects\3207_project_1\fifoqueue.c
+1568506977 source:c:\users\jstea\onedrive\desktop\c projects\3207_project_1\fifoqueue.c
 	<stdio.h>
 	<stdlib.h>
 	"FIFOQueue.h"

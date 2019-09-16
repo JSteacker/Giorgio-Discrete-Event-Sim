@@ -43,11 +43,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="PriorityQueue.h" />
+		<Unit filename="README.txt" />
 		<Unit filename="config.txt" />
 		<Unit filename="log.log" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="runs.txt" />
 		<Extensions>
 			<code_completion />
 			<envvars />
